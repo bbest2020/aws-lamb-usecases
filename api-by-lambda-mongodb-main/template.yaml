@@ -14,17 +14,41 @@ Resources:
   FetchAllUsersFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: api-dynamo-db/
+      FunctionName: FetchAllUsers
+      CodeUri: api-by-lambda-mongodb/
       Handler: app.fetchAllUsers
       Runtime: nodejs18.x
+      Policies: 
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
       Architectures:
         - x86_64
       Events:
         FetchAllUsersAPI:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /fetchAllUsers
-            Method: get
+            Path: /api/fetchAllUsers
+            Method: GET
+
+  FetchAllUsersFunction2:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: FetchAllUsers2
+      CodeUri: api-by-lambda-mongodb/
+      Handler: app.fetchAllUsers2
+      Runtime: nodejs18.x
+      Policies: 
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaVPCAccessExecutionRole
+      Architectures:
+        - x86_64
+      Events:
+        FetchAllUsersAPI:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /api/fetchAllUsers2
+            Method: GET
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

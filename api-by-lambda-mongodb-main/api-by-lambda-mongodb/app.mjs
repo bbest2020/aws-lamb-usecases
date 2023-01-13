@@ -8,10 +8,35 @@ export const fetchAllUsers = async (event, context) => {
     try {
         console.log("In progress to create a mongo db connection");
         await client.connect();
-        const databasesList = await client.db().admin().listDatabases();
+        const userCollection =  client.db("peering-connect-db").collection("user");
+        //const cursor =  await userCollection.find({});  
+        let users = [];
+        await userCollection.find({}).forEach(user => users.push(user));
         const res = {
             'statusCode': 200,
-            'body': JSON.stringify(databasesList)
+            'body': JSON.stringify(users)
+        }
+        console.log(res);
+        return res;
+
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+};
+
+export const fetchAllUsers2 = async (event, context) => {
+    
+    try {
+        console.log("In progress to create a mongo db connection");
+        await client.connect();
+        const userCollection =  client.db("peering-connect-db").collection("user");
+        //const cursor =  await userCollection.find({});  
+        let users = [];
+        await userCollection.find({}).forEach(user => users.push(user));
+        const res = {
+            'statusCode': 200,
+            'body': JSON.stringify(users)
         }
         console.log(res);
         return res;
